@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+
     const openNav = document.getElementById("openNavBtn");
     const addBtnProduct = document.getElementById("addBtn");
     const productNameInput = document.getElementById("productName");
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishlistContainer = new bootstrap.Offcanvas(document.getElementById("wishList"));
     const productModal = new bootstrap.Modal(document.getElementById("productModal"));
 
+    
     class Product {
         constructor(name, category, brand, price) {
             this.name = name;
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const price = productPriceInput.value;
 
         if (!name || !category || !brand || !price) {
-            alert("Modalin icin doldurun");
+            alert("Modalin icin doldurun!");
         } else {
             const newProduct = new Product(name, category, brand, price);
             displayProduct(newProduct);
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayProduct(product) {
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("product_card");
-        cardDiv.innerHTML = `
+        cardDiv.innerHTML= `
             <h3>${product.name}</h3>
             <p>Category: ${product.category}</p>
             <p>Brand: ${product.brand}</p>
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const wishlistBtn = cardDiv.querySelector(".wishlist-btn");
         wishlistBtn.addEventListener("click", function() {
             addToWishlist(product);
+            saveLocalStorage(product)
         });
 
         productContainer.appendChild(cardDiv);
@@ -70,32 +72,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     function addToWishlist(product) {
+     
         const wishlistModal = document.getElementById("wishList");
         const wishlistContainer = wishlistModal.querySelector(".offcanvas-body");
 
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("product_card");
-        cardDiv.innerHTML = `
+        cardDiv.innerHTML += `
             <h3>${product.name}</h3>
             <p>Category: ${product.category}</p>
             <p>Brand: ${product.brand}</p>
             <p>Price: ${product.price} azn</p>
         `;
+       
         wishlistContainer.appendChild(cardDiv);
-
-        const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-        wishlist.push(product);
-        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      
     }
+    
+   function saveLocalStorage(product){
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    console.log(wishlist)
+    wishlist.push(product);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+   }
 
 
     const products = JSON.parse(localStorage.getItem("products")) || [];
     products.forEach(product => {
         displayProduct(product);
     });
-
-    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  function fromLocalStorage(){
+    const wishlist = JSON.parse(localStorage.getItem("wishlist"));
+    console.log(wishlist)
     wishlist.forEach(product => {
         addToWishlist(product);
     });
-});
+  }
+
+  fromLocalStorage()
+
