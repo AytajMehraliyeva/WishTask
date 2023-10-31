@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishlistContainer = new bootstrap.Offcanvas(document.getElementById("wishList"));
     const productModal = new bootstrap.Modal(document.getElementById("productModal"));
 
-
     class Product {
         constructor(name, category, brand, price) {
             this.name = name;
@@ -23,11 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         wishlistContainer.show();
     });
 
-
+    
     addBtnProduct.addEventListener("click", () => {
         productModal.show();
     });
 
+   
     const addProductBtn = document.getElementById("addProductBtn");
     addProductBtn.addEventListener("click", () => {
         const name = productNameInput.value;
@@ -35,17 +35,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const brand = productBrandInput.value;
         const price = productPriceInput.value;
 
-        const newProduct = new Product(name, category, brand, price);
-        displayProduct(newProduct);
+        if (!name || !category || !brand || !price) {
+            alert("Modalin icin doldurun");
+        } else {
+            const newProduct = new Product(name, category, brand, price);
+            displayProduct(newProduct);
 
-        const products = JSON.parse(localStorage.getItem("products")) || [];
-        products.push(newProduct);
-        localStorage.setItem("products", JSON.stringify(products));
+            const products = JSON.parse(localStorage.getItem("products")) || [];
+            products.push(newProduct);
+            localStorage.setItem("products", JSON.stringify(products));
 
-        productModal.hide(); 
+            productModal.hide(); 
+        }
     });
 
-   
     function displayProduct(product) {
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("product_card");
@@ -53,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3>${product.name}</h3>
             <p>Category: ${product.category}</p>
             <p>Brand: ${product.brand}</p>
-            <p>Price: $${product.price}</p>
+            <p>Price: ${product.price} azn</p>
             <button class="wishlist-btn">Add to Wishlist</button>
         `;
 
@@ -65,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productContainer.appendChild(cardDiv);
     }
 
- 
+    
     function addToWishlist(product) {
         const wishlistModal = document.getElementById("wishList");
         const wishlistContainer = wishlistModal.querySelector(".offcanvas-body");
@@ -76,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3>${product.name}</h3>
             <p>Category: ${product.category}</p>
             <p>Brand: ${product.brand}</p>
-            <p>Price: $${product.price}</p>
+            <p>Price: ${product.price} azn</p>
         `;
         wishlistContainer.appendChild(cardDiv);
 
@@ -85,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
     }
 
-   
+
     const products = JSON.parse(localStorage.getItem("products")) || [];
     products.forEach(product => {
         displayProduct(product);
