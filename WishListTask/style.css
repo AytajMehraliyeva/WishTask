@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.nav_btn {
+    position: absolute;
+    left: 40px;
+    top: 28px;
+    width: 25px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.button_div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 420px;
+    margin: 200px auto;
+    gap: 10px;
+    height: 100px;
+}
+
+#addBtn {
+    padding: 20px 5px;
+    border: none;
+    border-radius: 10px;
+    width: 120px;
+    font-size: 19px;
+    background-color: rgb(57, 226, 1);
+    color: white;
+}
+
+#addBtn:hover {
+    background-color: rgb(47, 178, 3);
+}
+
+.product_card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.wishlist-btn {
+    background-color: blue;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
